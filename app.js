@@ -1,5 +1,6 @@
 const express = require('express');
 const dotenv = require('dotenv');
+const morgan = require('morgan');
 
 // Route Files
 const parties = require('./routes/parties');
@@ -8,6 +9,11 @@ const parties = require('./routes/parties');
 dotenv.config({path: './config/config.env'});
 
 const app = express();
+
+// DEV logging middleware
+if (process.env.NODE_ENV === 'development') {
+    app.use(morgan('dev'));
+}
 
 // Mount Routes
 app.use('/api/v1/parties', parties);
